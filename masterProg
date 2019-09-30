@@ -1,0 +1,99 @@
+/*****************************************************************************************************************
+author     :Hamish Kenehan, Joshua Kim, Wenhui Li, Nathan Lu, Mary Rizkalla
+date       :
+
+description:A functioning E-bookstore storage format that allows users to store, search and sort books
+
+*****************************************************************************************************************/
+
+/*Login Function */
+
+ /*Header Files */
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+/*End Header FIles */
+/*Preprocessing directives */
+#define TRUE 1;
+#define FALSE 0;
+#define MAX_NUM_ATTEMPTS 4;
+
+
+/*End preprocessing directives */
+
+/*Function prototypes */
+void welcome_screen (void);
+void login();
+void registration();
+
+/*End Function Prototypes */
+
+/*Global Variables*/
+char username[40];
+char password[40];
+char* login_u[40] = {"test", "check", "trial"};
+char* login_p[40] = {"password", "checks", "trialrun"};
+
+/*End Global Variables*/
+
+/*Main Program*/
+int main (void)
+{
+	int userInput = 0;
+	while(userInput != 3)
+	{
+		welcome_screen();
+		printf("Input your choice\n");
+		scanf("%d", &userInput);
+		if(userInput == 1)
+		{
+			login();
+		}
+	}
+	return 0;
+
+}
+/*End Main Program*/
+
+
+void welcome_screen()
+{
+	printf("\n"
+	"Welcome to books\n"
+	"Please select a following option\n"
+	"1.Login \n"
+	"2.Register \n"
+	);	
+}
+
+void login()
+{
+
+	printf("Enter username: ");
+	scanf("%s", &username);
+	printf("\nEnter password: ");
+	scanf("%s", &password);
+	for(int i = 0; i < 25; i++)
+	{
+		if(strcmp(username,login_u[i])==0 && strcmp(password,login_p[i])==0)
+		{
+			printf("Logged In\n");
+		}
+	}
+
+}	
+
+
+void registration()
+{
+	int listpos = 2;
+	printf("Enter new username: ");
+	scanf("%s", &username);
+	printf("\nEnter new password: ");
+	scanf("%s", &password);
+}
+
+/*End Login Function*/
+
+
+
