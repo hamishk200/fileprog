@@ -1,12 +1,10 @@
-/*****************************************************************************************************************
-author     :Hamish Kenehan, Joshua Kim, Wenhui Li, Nathan Lu, Mary Rizkalla
+/*******************************************************************************
+author     : Hamish Kenehan
 date       :
 
-description:A functioning E-bookstore storage format that allows users to store, search and sort books
-
-*****************************************************************************************************************/
-
-/*Login Function */
+description:
+a functioning login system
+*******************************************************************************/
 
  /*Header Files */
 #include <stdio.h>
@@ -25,14 +23,15 @@ description:A functioning E-bookstore storage format that allows users to store,
 void welcome_screen (void);
 void login();
 void registration();
+void printUsers();
 
 /*End Function Prototypes */
 
 /*Global Variables*/
 char username[40];
 char password[40];
-char* login_u[40] = {"test", "check", "trial"};
-char* login_p[40] = {"password", "checks", "trialrun"};
+char login_u[40][40] = {"test", "check", "trial"};
+char login_p[40][40] = {"password", "checks", "trialrun"};
 
 /*End Global Variables*/
 
@@ -43,11 +42,16 @@ int main (void)
 	while(userInput != 3)
 	{
 		welcome_screen();
+		/*printUsers();*/
 		printf("Input your choice\n");
 		scanf("%d", &userInput);
 		if(userInput == 1)
 		{
 			login();
+		}
+		else if(userInput == 2)
+		{
+			registration();
 		}
 	}
 	return 0;
@@ -70,9 +74,9 @@ void login()
 {
 
 	printf("Enter username: ");
-	scanf("%s", &username);
+	scanf("%s", username);
 	printf("\nEnter password: ");
-	scanf("%s", &password);
+	scanf("%s", password);
 	for(int i = 0; i < 25; i++)
 	{
 		if(strcmp(username,login_u[i])==0 && strcmp(password,login_p[i])==0)
@@ -86,14 +90,50 @@ void login()
 
 void registration()
 {
-	int listpos = 2;
+	int listpos, i;
+	/* Find empty position for user */
+	for(listpos=0; listpos<40; listpos++)
+	{
+		if(strcmp(login_u[listpos],"") == 0)
+		{
+			break;
+		}
+	}
+	if(listpos==40)
+	{
+		printf("Registration is full\n");
+		exit(1);
+	}
+
 	printf("Enter new username: ");
-	scanf("%s", &username);
+	scanf("%s", username);
 	printf("\nEnter new password: ");
-	scanf("%s", &password);
+	scanf("%s", password);
+
+	/* Check if user already exists */
+	for(i = 0; i < listpos; i++)
+	{
+		if(strcmp(login_u[i], username) == 0){
+			printf("The user %s already exists in the database\n", username);
+			exit(1);
+		}
+	}
+
+	strcpy(login_u[listpos], username);
+	strcpy(login_p[listpos], password);
 }
 
-/*End Login Function*/
 
-
-
+void printUsers()
+{
+	int i=0;
+	printf("User database\n");
+	for(i=0; i<40; i++)
+	{
+		if(strcmp(login_u[i],"") == 0)
+		{
+			break;
+		}
+		printf("%-10s %s\n", login_u[i], login_p[i]);	
+	}
+}
