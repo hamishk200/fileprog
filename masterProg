@@ -1,9 +1,8 @@
 /*******************************************************************************
-author     : Hamish Kenehan
+author     : Hamish Kenehan, Joshua Kim, Wenhui Li, Nathan Lu, Mary Rizkalla
 date       :
 
-description:
-a functioning login system
+description:A functioning E-bookstore storage format that allows users to store, search and sort books
 *******************************************************************************/
 
  /*Header Files */
