@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dirent.h> 
 
-#define DB_NAME "userdb"
 #define EXIT 4	
 #define RESELECT 6
 
@@ -11,31 +11,38 @@ int getChoice();
 void printMenu();
 int fileExist(const char fileName[]);
 int encrypt();
-int encode();
+int showAll();
+int search();
 
 int main(void)
 {
 	int userInput;
-	int (*fun_ptr_arr[3])() = {createFile, encrypt, encode};
+	/*function pointer*/
+	int (*fun_ptr_arr[4])() = {createFile, encrypt, showAll, search};
+	/*if the user input is not equal to EXIT, the function will loop*/
 	while (userInput != EXIT)
 	{
 		printMenu();	
 		userInput = getChoice();
-		(*fun_ptr_arr[userInput])();
+		if(userInput != EXIT && userInput <= 3 && userInput >= 0)
+		{
+			(*fun_ptr_arr[userInput])();
+		}
+		
 	}
-
 	return 0;
-
 }
 
-void printMenu(void) {
+void printMenu(void) 
+{
 	printf("\n"
 		"1. Creat a file\n"
 		"2. Encrypt\n"
 		"3. anti- Encrypt\n"
-		"4. load the flights from the database file\n"
-		"5. exit the program\n"
-		"Enter choice (number between 1-5)>\n");
+		"4. Show all available books\n"
+		"5. Search\n"
+		"6. Exit\n"
+		"Enter choice (number between 1-6)>\n");
 }
 
 int getChoice()
@@ -56,11 +63,14 @@ int getChoice()
 		return 1;
 		break;
 	case 4:
-		return 3;
+		return 2;
 		break;
 	case 5:
-		return EXIT;
+		return 3;
 		break;
+	case 6:
+	    return 4;
+	    break;
 	default:
 		printf("Invalid choice\n");
 		return RESELECT;
@@ -70,14 +80,14 @@ int getChoice()
 int createFile()
 {
 	FILE* fp = NULL;
-	char input[1000];
+	char input[1000];/*store the diary from the user*/
 	printf("enter your diary:");
 	fgets(input, 1000, stdin);
 	char filename[20];
 	printf("enter a file name:");
 	scanf("%s", filename);
-	fp = fopen(filename, "w");
-	fprintf(fp, "%s", input);
+	fp = fopen(filename, "w");/*write the name to the file*/
+	fprintf(fp, "%s", input);/*write the context to the file*/
 	fclose(fp);
 	return 0;
 }
@@ -99,6 +109,8 @@ int encrypt()
 {
 	FILE* fp = NULL;
 	FILE* fw;
+	/*fliename use to read the file will be encrypt, 
+	fileOutout use to write the encrypt context*/
 	char filename[20], fileOutput[20];
 	printf("Enter the file name you want to encrypt:\n");
 	scanf("%s", filename);
@@ -111,21 +123,17 @@ int encrypt()
 
 	if (fp == NULL)
 	{
-		printf("fp error\n");
+		printf("Your target file not exist\n");
 		return 0;
 	}
-	if (fw == NULL)
-	{
-		printf("fw error\n");
-		return 0;
-	}
+
 	else
 	{
-		while (!feof(fp))
+		while (!feof(fp))/*read the context of the target file*/
 		{
-			char ch = fgetc(fp);
-			ch = ch ^ 2;
-			fputc(ch ,fw);
+			char ch = fgetc(fp);/*get each characters from the file*/
+			ch = ch ^ 2;/*encrypt*/
+			fputc(ch ,fw);/*put the encrypt context into the new file*/
 		}
 	}
 	fclose(fp);
@@ -133,55 +141,36 @@ int encrypt()
 	return 0;
 }
 
-int encode()
+int showAll()
 {
-	FILE* fp = NULL;
-	FILE* fw = NULL;
-	char filename[20], fileOutput[20];
-	printf("Enter the file name you want to encode:\n");
-	scanf("%s", filename);
-	printf("Enter the out put file name:\n");
-	scanf("%s", fileOutput);
-	fp = fopen(filename, "r");
-	fw = fopen(fileOutput, "w");
-	if (fp == NULL || fw == NULL)
+	DIR *d;
+    struct dirent *dir;
+ 	d = opendir(".");
+	if (d) 
 	{
-		printf("fp error\n");
-		return 0;
-	}
-
-	else
-	{
-		char str[1000];
-		fgets(str, 1000, fp);
-		int size = strlen(str);
-
-		int i,k, j = 0;
-		char count[50];
-		int length;
-		char dest[1000];
-		for (i = 0; i < size; i++)
+		while ((dir = readdir(d)) != NULL)
 		{
-			dest[j++] = str[i];
-			length = 1;
-			while (str[i] == str[i + 1])
-			{
-				length++;
-				i++;
-			}
-			sprintf(count, "%d", length);
-			for (k = 0; k < strlen(count); k++, j++)
-			{
-				dest[j] = count[k];
-			}
+			printf("%s\n", dir->d_name);
 		}
-		dest[j] = '\0';
-		printf("%s", dest);
-		fprintf(fw, "%s", dest);
-		fclose(fp);
-		fclose(fw);
+		closedir(d);
 	}
-
 	return 0;
 }
 
+int search()
+{
+	char keyworld[20];
+	printf("Enter your key world\n");
+	scanf("%s", keyworld);
+	FILE* fp = NULL;
+	fp = fopen(keyworld, "r");
+	if(fp == NULL)
+	{
+		printf("The book you searched is not exits\n");
+	}
+	else
+	{
+		printf("The book you want is: %s\n", keyworld);
+	}
+	return 0;
+}
