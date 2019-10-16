@@ -104,14 +104,7 @@ int main(void)
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int printMenu(void)
 {
 	printf("\n1. Compress file.\n");
@@ -122,14 +115,7 @@ int printMenu(void)
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int selectChoice(void)
 {
 	char input[200];
@@ -153,14 +139,7 @@ int selectChoice(void)
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int compressFile(void)
 {
 
@@ -183,7 +162,7 @@ int compressFile(void)
 		return 1;
 	}
 
-
+	
 	/****store the unique chars and corresponding frequencies in arrays****/
 	char *uniqueChars = malloc(sizeof(char)*stringLength);
 	*uniqueChars = '\0';
@@ -286,14 +265,7 @@ int compressFile(void)
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int getInputString(char *fileName, char *charArray)
 {
 	printf("\n>Searching for %s  \n...\n", fileName);
@@ -324,14 +296,7 @@ int getInputString(char *fileName, char *charArray)
 	return strlen(charArray);
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int uniqueCharsFreqCounter(char *inputString, int inputStringLength, 
 	char *uniqueChars, int *charFreq)
 {
@@ -360,14 +325,7 @@ int uniqueCharsFreqCounter(char *inputString, int inputStringLength,
 	return countUniqueChars;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 void createHuffmanTree(node_t *nodeArray[], const int noOfUniqueChars)
 {
 
@@ -388,14 +346,7 @@ void createHuffmanTree(node_t *nodeArray[], const int noOfUniqueChars)
 	}
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int nextSmallestIndex(node_t *nodeArray[], int currentSmallestIndex, 
 	const int noOfUniqueChars)
 {
@@ -469,14 +420,7 @@ int nextSmallestIndex(node_t *nodeArray[], int currentSmallestIndex,
 	return nextSmallestIndex;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 void preorderGenerationOfHuffmanCode(node_t *tree, int huffmanCode[], 
 	int codeIndex, const int noOfUniqueChars, key_value_pair_t *codeArray[])
 {
@@ -527,14 +471,7 @@ void preorderGenerationOfHuffmanCode(node_t *tree, int huffmanCode[],
 	return;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int encodeString(char *inputString, int inputStringLength, char *compressedOut, 
 	const int noOfUniqueChars, key_value_pair_t *codeArray[])
 { 
@@ -554,14 +491,7 @@ int encodeString(char *inputString, int inputStringLength, char *compressedOut,
 	return strlen(compressedOut);
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int decodeString(char *compressedIn, int compressedInLength, 
 	char *decompressedOut, const int noOfUniqueChars, 
 	key_value_pair_t *codeArray[])
@@ -593,14 +523,7 @@ int decodeString(char *compressedIn, int compressedInLength,
 	return strlen(decompressedOut);
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int outputCompressedString(char *compressedString, int compressedStringLength, 
 	char *outputFileName)
 {
@@ -646,14 +569,7 @@ int outputCompressedString(char *compressedString, int compressedStringLength,
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int outputCodes(key_value_pair_t *codeArray[], int noOfUniqueChars, 
 	int stringLength, char *outputFileName)
 {
@@ -687,14 +603,7 @@ int outputCodes(key_value_pair_t *codeArray[], int noOfUniqueChars,
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int decompressFile(void)
 {
 	printf("Enter the name of the file you wish to decompress: \n");
@@ -814,14 +723,7 @@ int decompressFile(void)
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int generateCompressedFileName(char *inputFileName, int inputFileNameLength, 
 	char *compressedFileName)
 {
@@ -834,14 +736,7 @@ int generateCompressedFileName(char *inputFileName, int inputFileNameLength,
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int generateCodeFileName(char *compressedFileName, int compressedFileNameLength, 
 	char *codeFileName)
 {
@@ -854,14 +749,7 @@ int generateCodeFileName(char *compressedFileName, int compressedFileNameLength,
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int generateDecompressedFileName(char *compressedFileName, 
 	int compressedFileNameLength, char *decompressedFileName)
 {
@@ -874,14 +762,7 @@ int generateDecompressedFileName(char *compressedFileName,
 	return 0;
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 int inputCompressedFileToBinString(char *compressedFileName, 
 	char *compressedInputInBin)
 {
@@ -925,14 +806,7 @@ int inputCompressedFileToBinString(char *compressedFileName,
 	return strlen(compressedInputInBin);
 }
 
-/*******************************************************************************
- * This function 
- *
- * inputs:
- * - 
- * outputs:
- * - 
-*******************************************************************************/
+
 char reverseBitsInByte(char byte)
 {
 	char reversedByte = '\0';
